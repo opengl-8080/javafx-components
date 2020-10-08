@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import java.util.Objects;
 
 public class FxWindow {
-    private final Parent parent;
+    private final Fxml<?, ?> fxml;
     private String title;
 
     private Stage owner;
@@ -17,11 +17,11 @@ public class FxWindow {
     private boolean resizable = true;
 
     public static FxWindow newWindow(Fxml<?, ?> fxml) {
-        return new FxWindow(fxml.getParent());
+        return new FxWindow(fxml);
     }
 
-    private FxWindow(Parent parent) {
-        this.parent = Objects.requireNonNull(parent);
+    private FxWindow(Fxml<?, ?> fxml) {
+        this.fxml = Objects.requireNonNull(fxml);
     }
     
     public FxWindow title(String title) {
@@ -71,8 +71,12 @@ public class FxWindow {
 
         stage.setResizable(resizable);
 
-        final Scene scene = new Scene(parent);
+        final Scene scene = new Scene(fxml.getParent());
         stage.setScene(scene);
-    }
 
+        final Object controller = fxml.getController();
+        if (controller instanceof InitializeStage) {
+            ((InitializeStage) controller).setStage(stage);
+        }
+    }
 }
