@@ -38,7 +38,7 @@ public class Fxml<C, P extends Parent> {
 
     public static <C, P extends Parent> Fxml<C, P> load(Class<C> controllerClass, Class<P> parentClass, String fxmlResourcePath) {
         try {
-            final URL fxmlResource = Fxml.class.getResource(fxmlResourcePath);
+            final URL fxmlResource = controllerClass.getResource(fxmlResourcePath);
             final FXMLLoader loader = new FXMLLoader(fxmlResource);
             P parent = loader.load();
             return new Fxml<>(loader.getController(), parent);
