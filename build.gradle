@@ -18,13 +18,6 @@ javafx {
     modules = [ 'javafx.fxml', 'javafx.controls' ]
 }
 
-ext {
-    artifactId = "gl-javafx"
-}
-
-group = "gl"
-version = "2.0.0"
-jar.archiveBaseName = artifactId
 
 dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter:5.8.1"
@@ -38,7 +31,9 @@ test {
 publishing {
     publications {
         maven(MavenPublication) {
-            artifactId = artifactId
+            group = "com.github.opengl-8080"
+            artifactId = "javafx-components"
+            version = "2.0.3"
             from components.java
         }
     }
