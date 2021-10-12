@@ -1,11 +1,11 @@
 plugins {
     id "java"
-    id "maven"
-    id "org.openjfx.javafxplugin" version "0.0.8"
+    id "maven-publish"
+    id "org.openjfx.javafxplugin" version "0.0.10"
 }
 
-sourceCompatibility = 11
-targetCompatibility = 11
+sourceCompatibility = 17
+targetCompatibility = 17
 
 [compileJava, compileTestJava]*.options*.encoding = "UTF-8"
 
@@ -14,19 +14,32 @@ repositories {
 }
 
 javafx {
-    version = "11"
+    version = "17"
     modules = [ 'javafx.fxml', 'javafx.controls' ]
 }
 
+ext {
+    artifactId = "gl-javafx"
+}
+
 group = "gl"
-version = "1.0.0"
-jar.archiveBaseName = "gl-javafx"
+version = "2.0.0"
+jar.archiveBaseName = artifactId
 
 dependencies {
-    testImplementation "org.junit.jupiter:junit-jupiter:5.7.0"
-    testImplementation "org.assertj:assertj-core:3.17.2"
+    testImplementation "org.junit.jupiter:junit-jupiter:5.8.1"
+    testImplementation "org.assertj:assertj-core:3.21.0"
 }
 
 test {
     useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifactId = artifactId
+            from components.java
+        }
+    }
 }
